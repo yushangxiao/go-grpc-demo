@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package hello;
+option go_package = "github.com/user/grpc-demo/proto";
+
+// 定义问候服务
+service GreetService {
+  // 发送问候
+  rpc SayHello (HelloRequest) returns (HelloResponse);
+  
+  // 处理 JSON 数据
+  rpc ProcessJson (JsonRequest) returns (JsonResponse);
+  
+  // 新增：服务端流式 RPC
+  rpc SayHelloStream (NumberRequest) returns (stream NumberResponse);
+}
+
+// 请求消息
+message HelloRequest {
+  string name = 1;
+}
+
+// 响应消息
+message HelloResponse {
+  string greeting = 1;
+}
+
+// JSON 请求消息
+message JsonRequest {
+  string json_data = 1;  // JSON 字符串
+}
+
+// JSON 响应消息
+message JsonResponse {
+  string json_data = 1;  // JSON 字符串
+  bool success = 2;      // 处理是否成功
+  string message = 3;    // 处理消息或错误信息
+}
+
+// 新增：数字请求消息
+message NumberRequest {
+  int32 number = 1;
+}
+
+// 新增：数字响应消息
+message NumberResponse {
+  int32 number = 1;
+}
